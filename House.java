@@ -72,17 +72,33 @@ public class House extends Building {
 
   private ArrayList<String> residents;
   private boolean hasDiningRoom;
+  private boolean hasElevator;
 
-  public House(String name, String address, int nFloors, boolean hasDiningRoom) {
+  public House(String name, String address, int nFloors, boolean hasDiningRoom, boolean hasElevator) {
     super(name, address, nFloors);
     this.residents = new ArrayList<String>();
     this.hasDiningRoom = hasDiningRoom;
+    this.hasElevator = hasElevator;
   }
 
   /** Accessor for hasDiningRoom */
   public boolean hasDiningRoom() {
     return this.hasDiningRoom;
   }
+
+  public boolean hasElevator(){
+    return this.hasElevator;}
+
+
+  public void goToFloor(int floorNum){
+    if (this.hasElevator == false) {
+      throw new RuntimeException("this building does not have an elevator");
+    }
+    super.goToFloor(floorNum);
+  }
+
+  
+
 
   /** Accessor for number of residents */
   public int nResidents() {
@@ -125,13 +141,24 @@ public class House extends Building {
     return description;
   }
 
+
+  public void showOptions(){
+    super.showOptions();
+    System.out.println("\n + hasDiningRoom() + \n + nResidents() + \n + moveIn() + \n + moveOut()");
+
+
+}
+
   public static void main(String[] args) {
-    House morrow = new House("Morrow", "The Quad", 4, false);
+    House morrow = new House("Morrow", "The Quad", 4, false, true);
     System.out.println(morrow);
     morrow.moveIn("Jordan");
     morrow.moveOut("Jordan");
     System.out.println(morrow);
-    House king = new House("King", "The Quad", 3, true);
+    House king = new House("King", "The Quad", 3, true, true);
+    king.showOptions();
+    king.enter();
+    king.goToFloor(3);
     System.out.println(king);
   }
 

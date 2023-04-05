@@ -1,22 +1,34 @@
 import java.util.Hashtable;
 
+import javax.management.RuntimeErrorException;
+
 /* This is a stub for the Library class */
 
 
 public class Library extends Building {
 
   private Hashtable<String, Boolean> collection;
-
+  private boolean hasElevator;
 
   /** Library contructor
    * @param name, address, nFloors
    */
 
-  public Library(String name, String address, int nFloors) {
+  public Library(String name, String address, int nFloors, boolean hasElevator) {
     super(name, address, nFloors);
     this.collection = new Hashtable<String, Boolean>();
+    this.hasElevator = hasElevator;
     System.out.println("You have built a library: 📖");
     }
+
+  /** returns if the building-library has an elevator
+   * @return boolean if there is an elevtor
+   */
+
+  public boolean hasElevator(){
+    return this.hasElevator;
+  }
+    
   
     /** Accessor for number of books in the collection just in case */
   public int nBooks() {
@@ -37,8 +49,6 @@ public class Library extends Building {
     // if we're good to go, add from collection
     this.collection.put(title, true);
     System.out.println("We added " + title + " to the collection of " + this.name + "! Yay! :-)");
-    
-
   }
 
    /** this method that removes title to hashtable collection
@@ -55,9 +65,7 @@ public class Library extends Building {
     // if we're good to go, remove from collection
     this.collection.remove(title);
     System.out.println("We removed " + title + " to the collection of " + this.name);
-    return(title);
-
-  } // return the title that we removed
+    return(title);} // return the title that we removed
   
 
    /** this method that assigns key to title to false
@@ -71,8 +79,6 @@ public class Library extends Building {
       throw new RuntimeException(title + " is not part of the collection in " + this.name);
     }
    this.collection.put(title, false);
-
-
   }
 
 
@@ -116,13 +122,22 @@ public class Library extends Building {
     toReturn +=  "Note: True is checked-in. False is checked-out. \n ";
     toReturn += "+this.printCollection()+";
     return toReturn;
-
-
   }
+
+  public void goToFloor(int floorNum) {
+    if (this.hasElevator = false) {
+      throw new RuntimeException("this building does not have an elevator");}
+    super.goToFloor(floorNum);
+  }
+
+  public void showOptions(){
+    super.showOptions();}
+
+
 
 
     public static void main(String[] args) {
-     Library hillyer = new Library("hillyer", "green st.", 3);
+     Library hillyer = new Library("hillyer", "green st.", 3, true);
      hillyer.addTitle("ur mom");
      hillyer.addTitle("milk & honey");
      hillyer.addTitle("communist manifesto");

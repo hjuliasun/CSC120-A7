@@ -6,6 +6,9 @@ public class Cafe extends Building {
     private int nSugarPackets; // The number of sugar packets remaining in inventory
     private int nCreams; // The number of "splashes" of cream remaining in inventory
     private int nCups; // The number of cups remaining in inventory
+    private boolean isEmployee;
+
+    
 
 
     /** Constructor for the Cafe class
@@ -13,15 +16,15 @@ public class Cafe extends Building {
      *  
      */
 
-    public Cafe(String name, String address, int nFloors){
+    public Cafe(String name, String address, int nFloors, boolean isEmployee){
         super(name, address, nFloors);
         this.nCoffeeOunces = 500;
         this.nSugarPackets = 500;
         this.nCreams = 500;
         this.nCups = 500;
+        this.isEmployee = isEmployee;
+
         System.out.println("You have built a cafe: ☕");
-
-
     }
 
     public void sellCoffee(int size, int nSugarPackets, int nCreams){
@@ -72,13 +75,26 @@ public class Cafe extends Building {
         toReturn += "Number of Cups: "+nCups+"  cups. ";
 
         return toReturn;
-
-
     }
+
+    public void showOptions(){
+        super.showOptions();
+        System.out.println("\n + restock() \n + sellCoffee()");
+    }
+
+
+    public void goToFloor(int floorNum){
+        if (this.isEmployee == false) {
+            throw new RuntimeException("you don't have access to other floors");}
+        super.goToFloor(floorNum);
+  }
+        
+    }
+    
     
     public static void main(String[] args) {
 
-        Cafe JuliaChild = new Cafe("Julia Child CC", "Main St.", 3);
+        Cafe JuliaChild = new Cafe("Julia Child CC", "Main St.", 3, false);
 
         for (int i = 0; i < 15; i++ ){
             JuliaChild.sellCoffee(20, 20, 20);
