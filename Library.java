@@ -1,6 +1,7 @@
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Arrays;
 
-import javax.management.RuntimeErrorException;
 
 /* This is a stub for the Library class */
 
@@ -10,9 +11,15 @@ public class Library extends Building {
   private Hashtable<String, Boolean> collection;
   private boolean hasElevator;
 
+
   /** Library contructor
    * @param name, address, nFloors
    */
+
+  
+ /** Overload Library constructor
+  * @param name,address,nFloors,hasElevator
+  */
 
   public Library(String name, String address, int nFloors, boolean hasElevator) {
     super(name, address, nFloors);
@@ -22,7 +29,7 @@ public class Library extends Building {
     }
 
   /** returns if the building-library has an elevator
-   * @return boolean if there is an elevtor
+   * @return boolean if there is an elevator
    */
 
   public boolean hasElevator(){
@@ -35,7 +42,7 @@ public class Library extends Building {
     return this.collection.size();
   }
 
-  /** this method that adds title to hashtable collection
+  /** original method that adds title to hashtable collection
    * @param title
    * throws an exception if the book is already there
    */
@@ -51,6 +58,17 @@ public class Library extends Building {
     System.out.println("We added " + title + " to the collection of " + this.name + "! Yay! :-)");
   }
 
+
+  /** Overload method to add multiple titles
+   * @param titles
+   */
+  public void addTitle(ArrayList<String> titles){
+    for (String i:titles){
+      this.addTitle(i);
+    }
+
+  }
+
    /** this method that removes title to hashtable collection
    * @param title
    * @return the title if we removed it
@@ -62,6 +80,8 @@ public class Library extends Building {
       //   if so: throw and exception
       throw new RuntimeException(title + " is not part of the collection in " + this.name);
     }
+
+
     // if we're good to go, remove from collection
     this.collection.remove(title);
     System.out.println("We removed " + title + " to the collection of " + this.name);
@@ -98,12 +118,10 @@ public class Library extends Building {
   public boolean containsTitle(String title){ 
     // returns true if the title appears as a key in the Libary's collection, false otherwise
     return this.collection.containsKey(title);
-  
     }
   
   public boolean isAvailable(String title){
     // returns true if the title is currently available, false otherwise
-
     return (this.collection.get(title));
     }
 
@@ -124,33 +142,35 @@ public class Library extends Building {
     return toReturn;
   }
 
+  public void showOptions(){
+    super.showOptions();}
+
   public void goToFloor(int floorNum) {
     if (this.hasElevator = false) {
       throw new RuntimeException("this building does not have an elevator");}
     super.goToFloor(floorNum);
   }
 
-  public void showOptions(){
-    super.showOptions();}
-
-
-
 
     public static void main(String[] args) {
      Library hillyer = new Library("hillyer", "green st.", 3, true);
+     hillyer.enter();
      hillyer.addTitle("ur mom");
      hillyer.addTitle("milk & honey");
      hillyer.addTitle("communist manifesto");
      hillyer.addTitle("bts jimin doll");
      hillyer.checkOut("ur mom");
      hillyer.containsTitle("milk & honey pt 2");
+     ArrayList<String> titles = new ArrayList<String>(Arrays.asList("bible", "moby dick", "art of war"));
+     hillyer.addTitle(titles);
+     hillyer.printCollection();
 
      // checking the status of a book 
      System.out.println("communism is " + hillyer.isAvailable("communist manifesto"));
 
      // checking in a book that isn't in the collection
 
-     hillyer.returnBook("the jewish & japanese: cooking & how to raise wolves");
+     hillyer.returnBook("the japanese: cooking & how to raise wolves");
      hillyer.removeTitle("bts jimin doll");
     System.out.println(hillyer);
 

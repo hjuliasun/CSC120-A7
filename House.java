@@ -66,6 +66,7 @@
 // }
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /* This is a stub for the House class */
 public class House extends Building {
@@ -74,6 +75,15 @@ public class House extends Building {
   private boolean hasDiningRoom;
   private boolean hasElevator;
 
+
+/**Default constructor*/
+  public House() {
+    this("<Name Unknown>", "<Address Unknown>", 1, true, true);
+  }
+
+/**Overload constructor for house
+ * @param name,address,nFloors,hasDiningRoom,hasElevator
+ */
   public House(String name, String address, int nFloors, boolean hasDiningRoom, boolean hasElevator) {
     super(name, address, nFloors);
     this.residents = new ArrayList<String>();
@@ -86,10 +96,11 @@ public class House extends Building {
     return this.hasDiningRoom;
   }
 
+  /** Accessor for hasElevator */
   public boolean hasElevator(){
     return this.hasElevator;}
 
-
+/** inherited goToFloor method */
   public void goToFloor(int floorNum){
     if (this.hasElevator == false) {
       throw new RuntimeException("this building does not have an elevator");
@@ -97,14 +108,15 @@ public class House extends Building {
     super.goToFloor(floorNum);
   }
 
-  
-
-
   /** Accessor for number of residents */
   public int nResidents() {
     return this.residents.size();
   }
 
+
+  /** Original Method for moving in residents
+   * @param name
+   */
   public void moveIn(String name) {
     // check if this.residents contains name
     if (this.residents.contains(name)) {
@@ -115,6 +127,17 @@ public class House extends Building {
     this.residents.add(name);
     System.out.println(name + " has just moved into " + this.name + "! Go say hello :-)");
   }
+
+/** Overload Method for moving in multiple residents
+   * @param nameofResidents
+   */
+  public void moveIn(ArrayList<String> nameofResidents){
+    for (String i:nameofResidents){
+      this.moveIn(i);
+    }
+
+  }
+
 
   public String moveOut(String name){
     // check if this.residents contains name
@@ -159,6 +182,8 @@ public class House extends Building {
     king.showOptions();
     king.enter();
     king.goToFloor(3);
+    ArrayList<String> residentNames = new ArrayList<String>(Arrays.asList("hannah", "reilly", "priya", "sam"));
+    king.moveIn(residentNames);
     System.out.println(king);
   }
 

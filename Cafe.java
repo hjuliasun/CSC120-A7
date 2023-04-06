@@ -11,22 +11,42 @@ public class Cafe extends Building {
     
 
 
-    /** Constructor for the Cafe class
+    /** Original Constructor for the Cafe class
      * @param name, address, number of Floors
-     *  
      */
 
-    public Cafe(String name, String address, int nFloors, boolean isEmployee){
+    public Cafe(String name, String address, int nFloors){
         super(name, address, nFloors);
         this.nCoffeeOunces = 500;
         this.nSugarPackets = 500;
         this.nCreams = 500;
         this.nCups = 500;
+
+        System.out.println("You have built a cafe: ☕");
+    }
+
+
+    /** Overload method for the Cafe constructor
+     * @param name,address,nFloors,nCoffeeOunces,nSugarPackets,nCreams,nCups,isEmployee
+     * @return print statement 
+     */
+    public Cafe(String name, String address, int nFloors, int nCoffeeOunces, int nSugarPackets, int nCreams, int nCups, boolean isEmployee){
+        super(name, address, nFloors);
+        this.nCoffeeOunces = nCoffeeOunces;
+        this.nSugarPackets = nSugarPackets;
+        this.nCreams = nCreams;
+        this.nCups = nCups;
         this.isEmployee = isEmployee;
 
         System.out.println("You have built a cafe: ☕");
     }
 
+
+
+    /** Original method Method to sell Coffee
+     * @param size,nSugarPackets,nCreams
+     * @return subtracts subsequent values from stock
+     */
     public void sellCoffee(int size, int nSugarPackets, int nCreams){
         if( this.nCoffeeOunces < size){
             System.out.println("out of coffee! restock time:)");
@@ -44,8 +64,7 @@ public class Cafe extends Building {
         }
         if (this.nCups < 1){
             System.out.println("out of cups! restock time:)");
-            this.restock(00, 00, 00, 100);
-           
+            this.restock(00, 00, 00, 100);  
         }
 
         this.nCoffeeOunces -= size; 
@@ -56,12 +75,25 @@ public class Cafe extends Building {
         System.out.println("here's your coffee!☕");
     }
 
+    /** Overload method for buying multiple cups of coffee
+     * @param size,nSugarPackets,nCreams,size2,nSugarPackets2,nCreams2
+     */
+    public void sellCoffee(int size, int nSugarPackets, int nCreams, int size2, int nSugarPackets2, int nCreams2){
+        this.sellCoffee(size2, nSugarPackets2, nCreams2);
+        this.sellCoffee(size, nSugarPackets, nCreams);
+    }
+
+
+    /** Restocks if there is none left from sellCoffee method
+     * @param nCoffeeOunces,Sugarpackets,nCreams,nCups
+    */
     private void restock(int nCoffeeOunces, int nSugarPackets, int nCreams, int nCups){
         this.nCoffeeOunces += nCoffeeOunces;
         this.nSugarPackets += nCups;
         this.nCreams += nCreams;
         this.nCups += nCups;
     } 
+
     
     /** Method that prints out the inventory + details about the cafe
      * @return values of nCoffeeOunces, nSugarPackets, nCreams & nCups
@@ -88,13 +120,15 @@ public class Cafe extends Building {
             throw new RuntimeException("you don't have access to other floors");}
         super.goToFloor(floorNum);
   }
-        
-    }
+
+
+
+    
     
     
     public static void main(String[] args) {
 
-        Cafe JuliaChild = new Cafe("Julia Child CC", "Main St.", 3, false);
+        Cafe JuliaChild = new Cafe("Julia Child CC", "Main St.", 3, 100, 100, 100, 100, false);
 
         for (int i = 0; i < 15; i++ ){
             JuliaChild.sellCoffee(20, 20, 20);
